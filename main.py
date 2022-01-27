@@ -86,12 +86,34 @@ print(amogstripped)
 que = driver.find_element(By.LINK_TEXT, amogstripped).click()
 sleep(1)
 
+main_page = driver.current_window_handle
+
+
 
 #click on the dropdown box and copy the vocab list link
 voclist = driver.find_element(By.XPATH, "/html/body/div[1]/div[1]/div[3]/div[1]/div/div[1]").click()
-vooclist2 = driver.find_element(By.LINK_TEXT, "Vocabulary List").get_attribute("href")
-print(vooclist2)
-bruhworkalready = driver.find_element(By.XPATH, "/html/body/div[1]/div[1]/div[3]/div[1]/div/div[1]").click()
+vooclist2 = driver.find_element(By.LINK_TEXT, "Vocabulary List").click()
+
+for handle in driver.window_handles:
+    if handle != main_page:
+        login_page = handle
+
+sleep(1)
+driver.switch_to.window(login_page)
+bruhstuff = driver.find_element(By.TAG_NAME, "tbody").text
+
+new_string = ''.join(filter(lambda x: not x.isdigit(), bruhstuff))
+
+answerlist = [new_string.split(".")]
+print(answerlist)
+
+closetab = driver.close()
+
+#.get_attribute("href")
+#print(vooclist2)
+
+#bruhworkalready = driver.find_element(By.XPATH, "/html/body/div[1]/div[1]/div[3]/div[1]/div/div[1]").click()
+
 
 #press the buttons needed to start 
 gradedpracticebutton = driver.find_element(By.XPATH, "//*[@id='practice']").click()
@@ -106,8 +128,7 @@ if oof2 == "yes":
   questiontext = driver.find_element(By.ID, "question-input").text
   print(questiontext)
   
-pdtest = pd.read_html(vooclist2)
-print(pdtest)
+
 
 
 
