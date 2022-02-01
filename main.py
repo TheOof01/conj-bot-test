@@ -6,8 +6,10 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.action_chains import ActionChains
 from bs4 import BeautifulSoup
 import pandas as pd
+import numpy as np
 from time import sleep
 import os, time, requests
+import re
 my_secret = os.environ['googlepassword']
 ready = False
 conjnumber = 0
@@ -100,12 +102,16 @@ for handle in driver.window_handles:
 
 sleep(1)
 driver.switch_to.window(login_page)
-bruhstuff = driver.find_element(By.TAG_NAME, "tbody").text
+variable = driver.find_element(By.TAG_NAME, "tbody").get_attribute("innerHTML")
 
-new_string = ''.join(filter(lambda x: not x.isdigit(), bruhstuff))
+#new_string = ''.join(filter(lambda x: not x.isdigit(), bruhstuff))
 
-answerlist = [new_string.split(".")]
-print(answerlist)
+#answerlist = [new_string.split(".")]
+#print(answerlist)
+
+with open("page_source.html", "w") as f:
+  f.write(driver.page_source)
+
 
 closetab = driver.close()
 
@@ -114,7 +120,7 @@ closetab = driver.close()
 
 #bruhworkalready = driver.find_element(By.XPATH, "/html/body/div[1]/div[1]/div[3]/div[1]/div/div[1]").click()
 
-
+driver.switch_to.window(main_page)
 #press the buttons needed to start 
 gradedpracticebutton = driver.find_element(By.XPATH, "//*[@id='practice']").click()
 timerbutton = driver.find_element(By.ID, "timer-checkbox").click()
@@ -122,13 +128,101 @@ startpracticebutton = driver.find_element(By.XPATH, "//*[@id='timerModal']/div/d
 
 oof2 = input("Ready?[type 'yes'] when ready to start: \n")
 
+df_list = pd.read_html('page_source.html')
+
+dataframe = df_list[0]
+
+englishlist = dataframe['English'].values.tolist()
+spanishlist = dataframe['Spanish'].values.tolist()
+
+englishlist2 = []
+spanishlist2 = []
+
+#iterate through the gathered data to remove numbers and whitespace, then add to new lists
+i = len(englishlist)
+e = 0
+while (i > e):
+  listnum = englishlist[e]
+  answer = re.sub(r'\d' + ".",'', listnum).strip()
+  englishlist2.append(answer)
+  e = e + 1
 
 
-if oof2 == "yes":
+ie = len(spanishlist)
+ee = 0
+while (ie > ee):
+  listnum2 = spanishlist[ee]
+  answer2 = re.sub(r'\d' + ".",'', listnum2).strip()
+  spanishlist2.append(answer2)
+  ee = ee + 1
+
+
+
+
+#englishlist2 = re.sub(r'\d','', englishlist)
+#spanishlist2 = re.sub(r'\d','', spanishlist)
+#voclist = dataframe.values.tolist()
+
+
+
+
+#print(englishlist)
+#print("\n")
+#print(spanishlist2)
+
+
+#for i, df in enumerate(df_list):
+    #print (df)
+    #df.to_csv('table.csv'.format(i))
+
+
+
+#remove the number and the period for each of the values, then search for 
+
+
+while oof2 == "yes":
   questiontext = driver.find_element(By.ID, "question-input").text
-  print(questiontext)
-  
 
+  #print(englishlist2)
+  #print(spanishlist2)
+
+  #fakeanswer = englishlist.index(questiontext)
+
+  #print(fakeanswer)
+
+  #realanswer = voclist[fakeanswer + 1]
+
+  #print(realanswer)
+
+  #answeringthing = driver.find_element(By.ID, "answer-input").send_keys(realanswer + Keys.ENTER)
+  
+  #i = len(englishlist)
+  #e = 0
+  #while (i < e):
+    #listnum = englishlist[e]
+    #answer = re.sub(r'\d' + ".",'', listnum)
+    #print(answer)
+    
+
+
+    #e + 1
+
+  
+  #answer = re.sub(r'\d' + ".",'', str(retrieved_elements))
+  #answer2 = answer.strip()
+  #print(answer)
+
+  #retrieved_elements = list(filter(lambda x: questiontext in x, englishlist))
+
+  #for match in englishlist2:
+  if questiontext in englishlist2:
+    listnumber = englishlist2.index(questiontext)
+    realanswer = spanishlist2[listnumber]
+    print(realanswer)
+    answeringthing = driver.find_element(By.ID, "answer-input").send_keys(realanswer + Keys.ENTER)
+  
+  
+  
 
 
 
