@@ -10,6 +10,7 @@ import numpy as np
 from time import sleep
 import os, time, requests
 import re
+
 my_secret = os.environ['googlepassword']
 ready = False
 conjnumber = 0
@@ -19,7 +20,6 @@ chrome_options.add_argument('--no-sandbox')
 chrome_options.add_argument('--disable-dev-shm-usage')
 
 driver = webdriver.Chrome(options=chrome_options)
-
 
 driver.get("https://conjuguemos.com/auth/login")
 #usernam = driver.find_element(By.NAME, 'identity')
@@ -37,8 +37,8 @@ bruhcookie.click()
 #sleep(2)
 
 #for handle in driver.window_handles:
-    #if handle != main_page:
-        #login_page = handle
+#if handle != main_page:
+#login_page = handle
 
 #switches from the conjuguemos window to the google login window
 #driver.switch_to.window(login_page)
@@ -49,7 +49,8 @@ bruhcookie.click()
 #amongus.send_keys(my_secret)
 
 #input username and password on the native login
-username = driver.find_element(By.ID, "identity").send_keys("25ct4645@medinabees.org")
+username = driver.find_element(By.ID,
+"identity").send_keys("25ct4645@medinabees.org")
 
 password = driver.find_element(By.ID, "password").send_keys(my_secret)
 
@@ -65,18 +66,17 @@ if oof == "yes":
 if conjnumber > 0:
   ready = True
 
-
 if ready == True:
   #bruh = driver.find_element(By.TAG_NAME, "body")
   #bruh.send_keys(Keys.CONTROL, "f")
   #webdriver.ActionChains(driver).send_keys(Keys.CONTROL, "f").perform()
 
   matched_elements = driver.find_elements(By.CLASS_NAME, "row-number")
-#gets all the availible conjuguemoses on the main page
+  #gets all the availible conjuguemoses on the main page
   texts = []
 for matched_element in matched_elements:
-    text = matched_element.text
-    texts.append(text)
+  text = matched_element.text
+  texts.append(text)
 
 #find the number conjuguemos from the number inputted
 amog = texts[conjnumber - 1]
@@ -90,15 +90,13 @@ sleep(1)
 
 main_page = driver.current_window_handle
 
-
-
 #click on the dropdown box and copy the vocab list link
 voclist = driver.find_element(By.XPATH, "/html/body/div[1]/div[1]/div[3]/div[1]/div/div[1]").click()
 vooclist2 = driver.find_element(By.LINK_TEXT, "Vocabulary List").click()
 
 for handle in driver.window_handles:
-    if handle != main_page:
-        login_page = handle
+  if handle != main_page:
+    login_page = handle
 
 sleep(1)
 driver.switch_to.window(login_page)
@@ -110,8 +108,7 @@ variable = driver.find_element(By.TAG_NAME, "tbody").get_attribute("innerHTML")
 #print(answerlist)
 
 with open("page_source.html", "w") as f:
-  f.write(driver.page_source)
-
+    f.write(driver.page_source)
 
 closetab = driver.close()
 
@@ -121,10 +118,12 @@ closetab = driver.close()
 #bruhworkalready = driver.find_element(By.XPATH, "/html/body/div[1]/div[1]/div[3]/div[1]/div/div[1]").click()
 
 driver.switch_to.window(main_page)
-#press the buttons needed to start 
-gradedpracticebutton = driver.find_element(By.XPATH, "//*[@id='practice']").click()
+#press the buttons needed to start
+gradedpracticebutton = driver.find_element(By.XPATH,
+"//*[@id='practice']").click()
 timerbutton = driver.find_element(By.ID, "timer-checkbox").click()
-startpracticebutton = driver.find_element(By.XPATH, "//*[@id='timerModal']/div/div[2]/button").click()
+startpracticebutton = driver.find_element(
+    By.XPATH, "//*[@id='timerModal']/div/div[2]/button").click()
 
 oof2 = input("Ready?[type 'yes'] when ready to start: \n")
 
@@ -135,56 +134,67 @@ dataframe = df_list[0]
 englishlist = dataframe['English'].values.tolist()
 spanishlist = dataframe['Spanish'].values.tolist()
 
-englishlist2 = []
-spanishlist2 = []
+#print(englishlist)
+#print(spanishlist)
 
+englishlist2 = [re.sub(r'\d+\.\s+', '', el) for el in englishlist]
+spanishlist2 = [re.sub(r'\d+\.\s+', '', el) for el in spanishlist]
+
+
+print(englishlist2)
+print("\n")
+print(spanishlist2)
+
+#englishlist2 = []
+#spanishlist2 = []
 #iterate through the gathered data to remove numbers and whitespace, then add to new lists
+''''
 i = len(englishlist)
 e = 0
 while (i > e):
   listnum = englishlist[e]
-  answer = re.sub(r'\d' + ".",'', listnum).strip()
-  englishlist2.append(answer)
+  #answer = re.sub(r'\d{2}' + ".", '', listnum).strip()
+  answer = [re.sub(r'\d+\.\s+', '', el) for el in englishlist]
+  print(answer)
   e = e + 1
 
+[re.sub(r'\d+\.\s+', '', el) for el in list]
 
 ie = len(spanishlist)
 ee = 0
 while (ie > ee):
   listnum2 = spanishlist[ee]
-  answer2 = re.sub(r'\d' + ".",'', listnum2).strip()
+  answer2 = re.sub(r'\d' + ".", '', listnum2).strip()
   spanishlist2.append(answer2)
   ee = ee + 1
 
-
-
-
+#print(englishlist2)
+#print(spanishlist2)
+'''
 #englishlist2 = re.sub(r'\d','', englishlist)
 #spanishlist2 = re.sub(r'\d','', spanishlist)
 #voclist = dataframe.values.tolist()
-
-
-
 
 #print(englishlist)
 #print("\n")
 #print(spanishlist2)
 
-
 #for i, df in enumerate(df_list):
-    #print (df)
-    #df.to_csv('table.csv'.format(i))
+#print (df)
+#df.to_csv('table.csv'.format(i))
 
+#remove the number and the period for each of the values, then search for
 
+limiter = driver.find_element(By.XPATH, "//*[@id='vocab-homework']/div[1]/div[3]/div/p[2]").get_attribute("title")
 
-#remove the number and the period for each of the values, then search for 
+print(limiter)
 
-
-while oof2 == "yes":
-  questiontext = driver.find_element(By.ID, "question-input").text
+if oof2 == "yes":
+  
+  #questiontext = driver.find_element(By.ID, "question-input").text
 
   #print(englishlist2)
-  #print(spanishlist2)
+    #print(spanishlist2)
 
   #fakeanswer = englishlist.index(questiontext)
 
@@ -195,19 +205,16 @@ while oof2 == "yes":
   #print(realanswer)
 
   #answeringthing = driver.find_element(By.ID, "answer-input").send_keys(realanswer + Keys.ENTER)
-  
+
   #i = len(englishlist)
   #e = 0
   #while (i < e):
-    #listnum = englishlist[e]
-    #answer = re.sub(r'\d' + ".",'', listnum)
-    #print(answer)
-    
+  #listnum = englishlist[e]
+  #answer = re.sub(r'\d' + ".",'', listnum)
+  #print(answer)
 
+  #e + 1
 
-    #e + 1
-
-  
   #answer = re.sub(r'\d' + ".",'', str(retrieved_elements))
   #answer2 = answer.strip()
   #print(answer)
@@ -215,17 +222,35 @@ while oof2 == "yes":
   #retrieved_elements = list(filter(lambda x: questiontext in x, englishlist))
 
   #for match in englishlist2:
-  if questiontext in englishlist2:
+  questiontext = driver.find_element(By.ID, "question-input").text
+
+  
+
+  while questiontext in englishlist2:
     listnumber = englishlist2.index(questiontext)
+
     realanswer = spanishlist2[listnumber]
+
     print(realanswer)
+
+    if r"/" in realanswer:
+      splitter = re.split(r"/", realanswer)
+      realanswer = splitter[0]
+
     answeringthing = driver.find_element(By.ID, "answer-input").send_keys(realanswer + Keys.ENTER)
-  
-  
-  
+
+    questiontext = driver.find_element(By.ID, "question-input").text
 
 
+    limiter = driver.find_element(By.XPATH, "//*[@id='vocab-homework']/div[1]/div[3]/div/p[2]").get_attribute("title")
+
+    sleep(0.1)
+
+    if limiter == "50/50":
+
+      driver.find_element(By.XPATH, "/html/body/div[1]/div[1]/div[7]/button").click
+      driver.find_element(By.XPATH, "//*[@id='save-score-confirm']/div/div[3]/button[2]").click
+      break
 
 
-
-
+            
