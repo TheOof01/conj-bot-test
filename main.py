@@ -13,15 +13,21 @@ import re
 import tkinter as tk
 from tkinter import messagebox
 
-my_secret = os.environ['googlepassword']
+#my_secret = os.environ['googlepassword']
 ready = False
 conjnumber = 0
 
 chrome_options = Options()
+prefs = {"credentials_enable_service": False,
+     "profile.password_manager_enabled": False}
+chrome_options.add_experimental_option("prefs", prefs)
 chrome_options.add_argument('--no-sandbox')
 chrome_options.add_argument('--disable-dev-shm-usage')
+chrome_options.add_argument('--disable-notifications')
 chrome_options.add_experimental_option("useAutomationExtension", False)
 chrome_options.add_experimental_option("excludeSwitches",["enable-automation"])
+#chrome_options.add_experimental_option("credentials_enable_service", False);
+#chrome_options.add_experimental_option("profile.password_manager_enabled", False);
 
 driver = webdriver.Chrome(options=chrome_options)
 
