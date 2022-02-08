@@ -2,14 +2,16 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.common.action_chains import ActionChains
-from bs4 import BeautifulSoup
+#from selenium.webdriver.support.ui import WebDriverWait
+#from selenium.webdriver.common.action_chains import ActionChains
+#from bs4 import BeautifulSoup
 import pandas as pd
-import numpy as np
+#import numpy as np
 from time import sleep
 import os, time, requests
 import re
+import tkinter as tk
+from tkinter import messagebox
 
 my_secret = os.environ['googlepassword']
 ready = False
@@ -26,6 +28,7 @@ driver.get("https://conjuguemos.com/auth/login")
 #usernam.send_keys("ok")
 
 #main_page = driver.current_window_handle
+#my_secret = os.environ['googlepassword']
 
 #click the cookie accept button
 bruhcookie = driver.find_element(By.XPATH, "/html/body/div/div/div/button")
@@ -49,18 +52,63 @@ bruhcookie.click()
 #amongus.send_keys(my_secret)
 
 #input username and password on the native login
-username = driver.find_element(By.ID,
-"identity").send_keys("25ct4645@medinabees.org")
+username = driver.find_element(By.ID, "identity").send_keys("25ct4645@medinabees.org")
+
 
 password = driver.find_element(By.ID, "password").send_keys(my_secret)
 
 submit = driver.find_element(By.ID, "login_btn").click()
 
-oof = input("Are you logged in?[type 'yes' when done]: \n")
+#sleep(5)
+
+#oof = input("Are you logged in?[type 'yes' when done]: \n")
+url = driver.current_url
+ok1 = False
+oof = "No"
+name = ""
+thing = True
+
+while thing == True:
+  if url == "https://conjuguemos.com/auth/login":
+    url = driver.current_url
+    sleep(1)
+  elif url == "https://conjuguemos.com/student/activities":
+    thing = False
+    break
+
+
+root = tk.Tk()
+
+root.geometry("400x100")
+
+num_var=tk.StringVar()
+
+def submit():
+ 
+  global name
+  name=num_var.get()
+     
+  global oof
+  oof = "yes"
+
+  print(name)
+
+  root.destroy()
+
+name_label = tk.Label(root, text = 'What number conjuguemos would you like to do?', font=('calibre',10, 'bold'))
+name_entry = tk.Entry(root,textvariable = num_var, font=('calibre',10,'normal'))
+sub_btn=tk.Button(root,text = 'Submit', command = submit)
+
+name_label.grid(row=0,column=0)
+name_entry.grid(row=1,column=0)
+sub_btn.grid(row=2,column=0)
+
+root.mainloop()
+
 if oof == "yes":
   #driver.switch_to.window(main_page)
-  oof2 = input("What number conjuguemos would you like to do?: \n")
-  conjnumber = int(oof2)
+  #oof2 = input("What number conjuguemos would you like to do?: \n")
+  conjnumber = int(name)
   driver.execute_script("window.scrollTo(0,300);")
 
 if conjnumber > 0:
@@ -74,9 +122,9 @@ if ready == True:
   matched_elements = driver.find_elements(By.CLASS_NAME, "row-number")
   #gets all the availible conjuguemoses on the main page
   texts = []
-for matched_element in matched_elements:
-  text = matched_element.text
-  texts.append(text)
+  for matched_element in matched_elements:
+    text = matched_element.text
+    texts.append(text)
 
 #find the number conjuguemos from the number inputted
 amog = texts[conjnumber - 1]
@@ -125,7 +173,7 @@ timerbutton = driver.find_element(By.ID, "timer-checkbox").click()
 startpracticebutton = driver.find_element(
     By.XPATH, "//*[@id='timerModal']/div/div[2]/button").click()
 
-oof2 = input("Ready?[type 'yes'] when ready to start: \n")
+oof2 = messagebox.askyesno("", "Ready to start?")
 
 df_list = pd.read_html('page_source.html')
 
@@ -141,9 +189,9 @@ englishlist2 = [re.sub(r'\d+\.\s+', '', el) for el in englishlist]
 spanishlist2 = [re.sub(r'\d+\.\s+', '', el) for el in spanishlist]
 
 
-print(englishlist2)
-print("\n")
-print(spanishlist2)
+#print(englishlist2)
+#print("\n")
+#print(spanishlist2)
 
 #englishlist2 = []
 #spanishlist2 = []
@@ -189,7 +237,7 @@ limiter = driver.find_element(By.XPATH, "//*[@id='vocab-homework']/div[1]/div[3]
 
 print(limiter)
 
-if oof2 == "yes":
+if oof2 == True:
   
   #questiontext = driver.find_element(By.ID, "question-input").text
 
@@ -231,12 +279,13 @@ if oof2 == "yes":
 
     realanswer = spanishlist2[listnumber]
 
-    print(realanswer)
+    
 
     if r"/" in realanswer:
       splitter = re.split(r"/", realanswer)
       realanswer = splitter[0]
 
+    print(realanswer)
     answeringthing = driver.find_element(By.ID, "answer-input").send_keys(realanswer + Keys.ENTER)
 
     questiontext = driver.find_element(By.ID, "question-input").text
