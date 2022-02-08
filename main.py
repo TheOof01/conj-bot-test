@@ -52,12 +52,12 @@ bruhcookie.click()
 #amongus.send_keys(my_secret)
 
 #input username and password on the native login
-username = driver.find_element(By.ID, "identity").send_keys("25ct4645@medinabees.org")
+#username = driver.find_element(By.ID, "identity").send_keys("25ct4645@medinabees.org")
 
 
-password = driver.find_element(By.ID, "password").send_keys(my_secret)
+#password = driver.find_element(By.ID, "password").send_keys(my_secret)
 
-submit = driver.find_element(By.ID, "login_btn").click()
+#submit = driver.find_element(By.ID, "login_btn").click()
 
 #sleep(5)
 
