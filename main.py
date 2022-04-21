@@ -8,7 +8,7 @@ from selenium.webdriver.common.keys import Keys
 import pandas as pd
 #import numpy as np
 from time import sleep
-import os, time, requests
+#import os, time, requests
 import re
 import tkinter as tk
 from tkinter import messagebox
@@ -55,7 +55,7 @@ bruhcookie.click()
 #driver.switch_to.window(login_page)
 #select the google window and input username & pass
 #amongus = driver.find_element(By.TAG_NAME, "input")
-#amongus.send_keys("25ct4645@medinabees.org" + Keys.ENTER)
+#amongus.send_keys("email" + Keys.ENTER)
 #sleep(5)
 #amongus.send_keys(my_secret)
 
