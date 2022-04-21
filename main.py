@@ -8,10 +8,11 @@ from selenium.webdriver.common.keys import Keys
 import pandas as pd
 #import numpy as np
 from time import sleep
-import os, time, requests
+#import os, time, requests
 import re
 import tkinter as tk
 from tkinter import messagebox
+import random
 
 #my_secret = os.environ['googlepassword']
 ready = False
@@ -55,7 +56,7 @@ bruhcookie.click()
 #driver.switch_to.window(login_page)
 #select the google window and input username & pass
 #amongus = driver.find_element(By.TAG_NAME, "input")
-#amongus.send_keys("25ct4645@medinabees.org" + Keys.ENTER)
+#amongus.send_keys("email" + Keys.ENTER)
 #sleep(5)
 #amongus.send_keys(my_secret)
 
@@ -83,7 +84,6 @@ while thing == True:
   elif url == "https://conjuguemos.com/student/activities":
     thing = False
     break
-
 
 root = tk.Tk()
 
@@ -164,7 +164,7 @@ variable = driver.find_element(By.TAG_NAME, "tbody").get_attribute("innerHTML")
 #print(answerlist)
 
 with open("page_source.html", "w") as f:
-    f.write(driver.page_source)
+  f.write(driver.page_source)
 
 closetab = driver.close()
 
@@ -302,11 +302,20 @@ if oof2 == True:
     limiter = driver.find_element(By.XPATH, "//*[@id='vocab-homework']/div[1]/div[3]/div/p[2]").get_attribute("title")
 
     sleep(0.1)
+    rand = random.randint(1, 5)
+    numbert = str(50 - rand)
+    if limiter == numbert + "/" + numbert:
+      for foo in range(0, rand):
+        foo = 0
+        answeringthing = driver.find_element(By.ID, "answer-input").send_keys("fakeanswer" + Keys.ENTER)
+        foo = foo + 1
+        
+        
 
-    if limiter == "50/50":
 
-      driver.find_element(By.XPATH, "/html/body/div[1]/div[1]/div[7]/button").click
-      driver.find_element(By.XPATH, "//*[@id='save-score-confirm']/div/div[3]/button[2]").click
+      
+      #driver.find_element(By.XPATH, "/html/body/div[1]/div[1]/div[7]/button").click
+      #driver.find_element(By.XPATH, "//*[@id='save-score-confirm']/div/div[3]/button[2]").click
       break
 
 
