@@ -280,8 +280,6 @@ if oof2 == True:
   #for match in englishlist2:
   questiontext = driver.find_element(By.ID, "question-input").text
 
-  
-
   while questiontext in englishlist2:
     listnumber = englishlist2.index(questiontext)
 
@@ -310,10 +308,6 @@ if oof2 == True:
         answeringthing = driver.find_element(By.ID, "answer-input").send_keys("fakeanswer" + Keys.ENTER)
         foo = foo + 1
         
-        
-
-
-      
       #driver.find_element(By.XPATH, "/html/body/div[1]/div[1]/div[7]/button").click
       #driver.find_element(By.XPATH, "//*[@id='save-score-confirm']/div/div[3]/button[2]").click
       break
