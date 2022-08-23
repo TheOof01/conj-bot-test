@@ -8,6 +8,7 @@ authors = ["Your Name <you@example.com>"]
 python = "^3.8"
 selenium = "^4.1.0"
 pandas = "^1.4.0"
+lxml = "^4.9.1"
 
 [tool.poetry.dev-dependencies]
 

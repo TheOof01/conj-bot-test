@@ -187,8 +187,11 @@ df_list = pd.read_html('page_source.html')
 
 dataframe = df_list[0]
 
-englishlist = dataframe['English'].values.tolist()
-spanishlist = dataframe['Spanish'].values.tolist()
+columnNames = list(dataframe.columns.values)
+print(columnNames)
+
+englishlist = dataframe[columnNames[0]].values.tolist()
+spanishlist = dataframe[columnNames[1]].values.tolist()
 
 #print(englishlist)
 #print(spanishlist)
@@ -301,7 +304,7 @@ if oof2 == True:
 
     sleep(0.1)
     rand = random.randint(1, 5)
-    numbert = str(50 - rand)
+    numbert = str(60 - rand)
     if limiter == numbert + "/" + numbert:
       for foo in range(0, rand):
         foo = 0
