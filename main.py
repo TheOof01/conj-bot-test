@@ -282,6 +282,8 @@ if oof2 == True:
 
   #for match in englishlist2:
   questiontext = driver.find_element(By.ID, "question-input").text
+  rand = random.randint(1, 6)
+  numbert = str(60 - rand)
 
   while questiontext in englishlist2:
     listnumber = englishlist2.index(questiontext)
@@ -294,17 +296,13 @@ if oof2 == True:
       splitter = re.split(r"/", realanswer)
       realanswer = splitter[0]
 
-    print(realanswer)
-    answeringthing = driver.find_element(By.ID, "answer-input").send_keys(realanswer + Keys.ENTER)
-
-    questiontext = driver.find_element(By.ID, "question-input").text
+    
 
 
     limiter = driver.find_element(By.XPATH, "//*[@id='vocab-homework']/div[1]/div[3]/div/p[2]").get_attribute("title")
 
     sleep(0.1)
-    rand = random.randint(1, 5)
-    numbert = str(60 - rand)
+    
     if limiter == numbert + "/" + numbert:
       for foo in range(0, rand):
         foo = 0
@@ -314,6 +312,9 @@ if oof2 == True:
       #driver.find_element(By.XPATH, "/html/body/div[1]/div[1]/div[7]/button").click
       #driver.find_element(By.XPATH, "//*[@id='save-score-confirm']/div/div[3]/button[2]").click
       break
+    print(realanswer)
+    answeringthing = driver.find_element(By.ID, "answer-input").send_keys(realanswer + Keys.ENTER)
 
+    questiontext = driver.find_element(By.ID, "question-input").text
 
             
