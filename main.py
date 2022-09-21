@@ -2,6 +2,8 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from easygui import *
+import easygui
 #from selenium.webdriver.support.ui import WebDriverWait
 #from selenium.webdriver.common.action_chains import ActionChains
 #from bs4 import BeautifulSoup
@@ -181,7 +183,20 @@ timerbutton = driver.find_element(By.ID, "timer-checkbox").click()
 startpracticebutton = driver.find_element(
     By.XPATH, "//*[@id='timerModal']/div/div[2]/button").click()
 
-oof2 = messagebox.askyesno("", "Ready to start?")
+question = "select your desired settings, then click ok. Slowmode slows down the answering. Auto submit submits when done."
+title = "conj bot settings"
+options = ["slowmode", "auto submit"]
+
+
+settings = easygui.multchoicebox(question, title, options)
+print(settings)
+
+
+
+#oof2 = messagebox.askyesno("", "Ready to start?")
+questionamount = easygui.integerbox("Enter amount of questions you want answered.")
+if type(questionamount) == int:
+  oof2 = True
 
 df_list = pd.read_html('page_source.html')
 
@@ -248,6 +263,12 @@ limiter = driver.find_element(By.XPATH, "//*[@id='vocab-homework']/div[1]/div[3]
 
 print(limiter)
 
+def slowmodeCheck():
+  if settings == ['slowmode']:
+    sleep(random.randint(1, 11))
+  else:
+    sleep(0.1)
+    
 if oof2 == True:
   
   #questiontext = driver.find_element(By.ID, "question-input").text
@@ -283,7 +304,7 @@ if oof2 == True:
   #for match in englishlist2:
   questiontext = driver.find_element(By.ID, "question-input").text
   rand = random.randint(1, 6)
-  numbert = str(60 - rand)
+  numbert = str(questionamount - rand)
 
   while questiontext in englishlist2:
     listnumber = englishlist2.index(questiontext)
@@ -300,8 +321,8 @@ if oof2 == True:
 
 
     limiter = driver.find_element(By.XPATH, "//*[@id='vocab-homework']/div[1]/div[3]/div/p[2]").get_attribute("title")
-
-    sleep(0.1)
+  
+    slowmodeCheck()
     
     if limiter == numbert + "/" + numbert:
       for foo in range(0, rand):
@@ -309,9 +330,12 @@ if oof2 == True:
         answeringthing = driver.find_element(By.ID, "answer-input").send_keys("fakeanswer" + Keys.ENTER)
         foo = foo + 1
         
-      #driver.find_element(By.XPATH, "/html/body/div[1]/div[1]/div[7]/button").click
-      #driver.find_element(By.XPATH, "//*[@id='save-score-confirm']/div/div[3]/button[2]").click
-      break
+      if settings == ['auto submit'] or ['slowmode', 'auto submit']:
+          
+        driver.find_element(By.XPATH, "/html/body/div[1]/div[1]/div[7]/button").click
+        driver.find_element(By.XPATH, "//*[@id='save-score-confirm']/div/div[3]/button[2]").click
+        break
+      
     print(realanswer)
     answeringthing = driver.find_element(By.ID, "answer-input").send_keys(realanswer + Keys.ENTER)
 
