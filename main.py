@@ -183,6 +183,7 @@ timerbutton = driver.find_element(By.ID, "timer-checkbox").click()
 startpracticebutton = driver.find_element(
     By.XPATH, "//*[@id='timerModal']/div/div[2]/button").click()
 
+sleep(0.1)
 question = "select your desired settings, then click ok. Slowmode slows down the answering. Auto submit submits when done."
 title = "conj bot settings"
 options = ["slowmode", "auto submit"]
@@ -222,7 +223,7 @@ spanishlist2 = [re.sub(r'\d+\.\s+', '', el) for el in spanishlist]
 #englishlist2 = []
 #spanishlist2 = []
 #iterate through the gathered data to remove numbers and whitespace, then add to new lists
-''''
+'''
 i = len(englishlist)
 e = 0
 while (i > e):
@@ -264,10 +265,16 @@ limiter = driver.find_element(By.XPATH, "//*[@id='vocab-homework']/div[1]/div[3]
 print(limiter)
 
 def slowmodeCheck():
-  if settings == ['slowmode']:
+  if 'slowmode' in settings:
     sleep(random.randint(1, 11))
   else:
     sleep(0.1)
+
+def autoSubmit():
+  if 'auto submit' in settings:
+        
+    driver.find_element(By.XPATH, "/html/body/div[1]/div[1]/div[7]/button").click()
+    driver.find_element(By.XPATH, "//*[@id='save-score-confirm']/div/div[3]/button[2]").click()
     
 if oof2 == True:
   
@@ -325,18 +332,20 @@ if oof2 == True:
     slowmodeCheck()
     
     if limiter == numbert + "/" + numbert:
+      
       for foo in range(0, rand):
         foo = 0
         answeringthing = driver.find_element(By.ID, "answer-input").send_keys("fakeanswer" + Keys.ENTER)
+        
         foo = foo + 1
         
-      if settings == ['auto submit'] or ['slowmode', 'auto submit']:
-          
-        driver.find_element(By.XPATH, "/html/body/div[1]/div[1]/div[7]/button").click
-        driver.find_element(By.XPATH, "//*[@id='save-score-confirm']/div/div[3]/button[2]").click
-        break
+      autoSubmit()
+      break
       
-    print(realanswer)
+          
+        
+      
+  	#print(realanswer)
     answeringthing = driver.find_element(By.ID, "answer-input").send_keys(realanswer + Keys.ENTER)
 
     questiontext = driver.find_element(By.ID, "question-input").text
