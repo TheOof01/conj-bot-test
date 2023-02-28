@@ -5,7 +5,7 @@ from selenium.webdriver.common.keys import Keys
 from easygui import *
 import easygui
 #from selenium.webdriver.support.ui import WebDriverWait
-#from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.action_chains import ActionChains
 #from bs4 import BeautifulSoup
 import pandas as pd
 #import numpy as np
@@ -20,6 +20,7 @@ import random
 ready = False
 conjnumber = 0
 
+
 chrome_options = Options()
 prefs = {"credentials_enable_service": False,
      "profile.password_manager_enabled": False}
@@ -33,7 +34,7 @@ chrome_options.add_experimental_option("excludeSwitches",["enable-automation"])
 #chrome_options.add_experimental_option("profile.password_manager_enabled", False);
 
 driver = webdriver.Chrome(options=chrome_options)
-
+action = ActionChains(driver)
 driver.get("https://conjuguemos.com/auth/login")
 #usernam = driver.find_element(By.NAME, 'identity')
 #usernam.send_keys("ok")
@@ -44,6 +45,7 @@ driver.get("https://conjuguemos.com/auth/login")
 #click the cookie accept button
 bruhcookie = driver.find_element(By.XPATH, "/html/body/div/div/div/button")
 bruhcookie.click()
+
 
 #click the sign in with google button
 #aight = driver.find_element(By.CLASS_NAME, "abcRioButtonContentWrapper")
@@ -148,9 +150,12 @@ sleep(1)
 
 main_page = driver.current_window_handle
 
+driver.maximize_window()
+driver.fullscreen_window()
 #click on the dropdown box and copy the vocab list link
 voclist = driver.find_element(By.XPATH, "/html/body/div[1]/div[1]/div[3]/div[1]/div/div[1]").click()
 vooclist2 = driver.find_element(By.LINK_TEXT, "Vocabulary List").click()
+
 
 for handle in driver.window_handles:
   if handle != main_page:
@@ -181,7 +186,7 @@ gradedpracticebutton = driver.find_element(By.XPATH,
 "//*[@id='practice']").click()
 timerbutton = driver.find_element(By.ID, "timer-checkbox").click()
 startpracticebutton = driver.find_element(
-    By.XPATH, "//*[@id='timerModal']/div/div[2]/button").click()
+    By.XPATH, "/html/body/x-modal[2]/div/div[3]/button").click()
 
 sleep(0.1)
 question = "select your desired settings, then click ok. Slowmode slows down the answering. Auto submit submits when done."
