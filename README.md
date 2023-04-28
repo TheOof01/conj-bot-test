@@ -8,7 +8,7 @@ how to use:
 3. sign in with google and complete the captcha
 4. put in what number conjuguemos you want it to do (note: it can only do the regular VC mode, it will break with other modes)
 5. wait for it to click on some stuff
-6. click yes on the popup and it will start
+6. click on the settings you want, yes on the popup and it will start
 
 todo:
-  extra features such as picking how many questions to do, slow mode, auto submit
+  ~extra features such as picking how many questions to do, slow mode, auto submit~
